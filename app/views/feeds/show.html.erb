@@ -1,4 +1,8 @@
 <p id="notice"><%= notice %></p>
+<h2><%= @feed.title %></h2>
+<ul>
+	<li><%= @feed.entrydate %></li>
+	<li><%= @feed.link %></li>
+</ul>
 
-<%= link_to 'Edit', edit_feed_path(@feed) %> |
-<%= link_to 'Back', feeds_path %>
+<%= link_to 'Back', feed_path %>

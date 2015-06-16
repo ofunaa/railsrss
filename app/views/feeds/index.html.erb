@@ -24,19 +24,25 @@
       <%= submit_tag "Search", :name => nil %>
     <% end %>
     <% @feeds.each do |feed| %>
-      <tr>
-        <td>
-          <% if feed.category == "52" %>
-            <%= "映画" %>
-          <% else %>
-            <%= feed.category %>
-          <% end %>
-         </td>
-        <td><%= feed.title %></td>
-        <td><%= feed.link %></td>
-        <td><%= feed.desc %></td>
-        <td><%= feed.entrydate %></td>
-      </tr>
+      <a href=<%= "/feeds/#{feed.id}" %>>
+        <tr>
+          <td>
+            <% if feed.category == "52" %>
+              <%= "映画" %>
+            <% else %>
+              <%= feed.category %>
+            <% end %>
+           </td>
+          <td>
+            <a href=<%= "/feeds/#{feed.id}" %>>
+              <%= feed.title %>
+            </a>
+          </td>
+          <td><%= feed.link %></td>
+          <td><%= feed.desc %></td>
+          <td><%= feed.entrydate %></td>
+        </tr>
+      </a>
     <% end %>
   </tbody>
 </table>
@@ -49,4 +55,3 @@
     add_selected.selected = true;
   }
 </script>
-<%= link_to 'New Feed', new_feed_path %>
