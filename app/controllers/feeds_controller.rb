@@ -68,6 +68,21 @@ class FeedsController < ApplicationController
   # GET /feeds/1
   # GET /feeds/1.json
   def show
+    require 'nokogiri'
+    require 'open-uri'
+    require 'cgi'
+
+    # スクレイピング先のURL
+    url = @feed.link
+    # Request the HTML before parsing
+    html = open(url).read
+    # Replace original DOCTYPE with a valid DOCTYPE
+    html = html.sub(/^<!DOCTYPE html(.*)$/, '<!DOCTYPE html>')
+    # Parse
+    doc = Nokogiri::HTML(html)
+    puts doc.css('#article-body')
+    @doc = doc.css('.articleBody').text.split(" ")
+
 
   end
 
