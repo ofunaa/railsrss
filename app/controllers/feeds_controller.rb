@@ -6,9 +6,9 @@ class FeedsController < ApplicationController
 
   def getrss
     if params[:category] != nil
-      @feeds = Feed.where(category: params[:category])
+      @feeds = Feed.where(category: params[:category]).order("entrydate DESC")
     elsif
-      @feeds = Feed.all
+      @feeds = Feed.all.order("entrydate DESC")
     end
     render "feeds/index"
   end

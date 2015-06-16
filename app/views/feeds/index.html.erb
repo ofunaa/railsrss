@@ -10,6 +10,7 @@
   <tbody>
     <%= form_tag feed_path, :method => 'get' do %>
       <%= select_tag "category", raw('
+      <option>選択してください</option>
       <option id="top" value="top">主要</option>
       <option id="dom" value="dom">国内</option>
       <option id="int" value="int">海外</option>
