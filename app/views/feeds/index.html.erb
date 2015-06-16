@@ -9,11 +9,28 @@
 
   <tbody>
     <%= form_tag feed_path, :method => 'get' do %>
-      <%= select_tag :search, params[:search] %>
+      <%= select_tag "category", raw('
+      <option id="top" value="top">主要</option>
+      <option id="dom" value="dom">国内</option>
+      <option id="int" value="int">海外</option>
+      <option id="eco" value="eco">IT 経済</option>
+      <option id="ent" value="ent">芸能</option>
+      <option id="spo" value="spo">スポーツ</option>
+      <option id="52" value="52">映画</option>
+      <option id="gourmet" value="gourmet">グルメ</option>
+      <option id="love" value="love">女子</option>
+      <option id="trend" value="trend">トレンド</option>') %>
       <%= submit_tag "Search", :name => nil %>
+    <% end %>
     <% @feeds.each do |feed| %>
       <tr>
-        <td><%= feed.category %></td>
+        <td>
+          <% if feed.category == "52" %>
+            <%= "映画" %>
+          <% else %>
+            <%= feed.category %>
+          <% end %>
+         </td>
         <td><%= feed.title %></td>
         <td><%= feed.link %></td>
         <td><%= feed.desc %></td>
@@ -24,5 +41,11 @@
 </table>
 
 <br>
-
+<script type="text/javascript">
+  console.log("<%= params[:category] %>")
+  window.onload = function(){
+    add_selected = document.getElementById("<%= params[:category] %>");
+    add_selected.selected = true;
+  }
+</script>
 <%= link_to 'New Feed', new_feed_path %>

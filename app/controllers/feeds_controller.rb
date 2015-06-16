@@ -5,7 +5,11 @@ class FeedsController < ApplicationController
   require 'rss'
 
   def getrss
-    @feeds = Feed.all
+    if params[:category] != nil
+      @feeds = Feed.where(category: params[:category])
+    elsif
+      @feeds = Feed.all
+    end
     render "feeds/index"
   end
 
