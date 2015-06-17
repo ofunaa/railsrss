@@ -9,8 +9,9 @@ RSSリーダーです。
 
 * 2
 
-  `brew install mecab`
-  `brew install mecab-ipadic`
+`brew install mecab`
+
+`brew install mecab-ipadic`
 
 * 3
 
@@ -18,8 +19,9 @@ RSSリーダーです。
 
 * 4
 
-  `rake db:create`
-  `rake db:migrate`
+`rake db:create`
+
+`rake db:migrate`
 
 * 5
 
