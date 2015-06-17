@@ -46,7 +46,6 @@ class FeedsController < ApplicationController
             "
 
             rssdata.items.each do |entry|
-                # # dateの記述が間違っているRSSがたまにあるので念のため
                 tmpdate = entry.respond_to?(:pubDate) ? entry.pubDate : entry.dc_date
                 item = Feed.new
                 icategory = rss.split(/\//)[5]
