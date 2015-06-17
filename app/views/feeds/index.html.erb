@@ -1,4 +1,17 @@
-<h1>Listing feeds</h1>
+<h1>Line Intern RSS-Reader　
+<% if params[:category] == "all" %>全て 
+<% elsif params[:category] == "top" %>主要
+<% elsif params[:category] == "dom" %>国内
+<% elsif params[:category] == "int" %>海外
+<% elsif params[:category] == "eco" %>IT 経済
+<% elsif params[:category] == "ent" %>芸能
+<% elsif params[:category] == "spo" %>スポーツ
+<% elsif params[:category] == "52" %>映画
+<% elsif params[:category] == "gourmet" %>グルメ
+<% elsif params[:category] == "love" %>女子
+<% elsif params[:category] == "trend" %>トレンド
+<% end %>
+</h1>
 
 <table>
   <thead>
@@ -8,31 +21,23 @@
   </thead>
 
   <tbody>
-    <%= form_tag feed_path, :method => 'get' do %>
-      <%= select_tag "category", raw('
-      <option value="">選択してください</option>
-      <option id="top" value="top">主要</option>
-      <option id="dom" value="dom">国内</option>
-      <option id="int" value="int">海外</option>
-      <option id="eco" value="eco">IT 経済</option>
-      <option id="ent" value="ent">芸能</option>
-      <option id="spo" value="spo">スポーツ</option>
-      <option id="52" value="52">映画</option>
-      <option id="gourmet" value="gourmet">グルメ</option>
-      <option id="love" value="love">女子</option>
-      <option id="trend" value="trend">トレンド</option>') %>
-      <%= submit_tag "Search", :name => nil %>
-    <% end %>
+    
+    <ul>
+      <li><%= link_to '全て', feeds_path(category: "all") %></li>
+      <li><%= link_to '主要', feed_path(category: "top") %></li>
+      <li><%= link_to '国内', feed_path(category: "dom") %></li>
+      <li><%= link_to '海外', feed_path(category: "int") %></li>
+      <li><%= link_to 'IT 経済', feed_path(category: "eco") %></li>
+      <li><%= link_to '芸能', feed_path(category: "ent") %></li>
+      <li><%= link_to 'スポーツ', feed_path(category: "spo") %></li>
+      <li><%= link_to '映画', feed_path(category: "52") %></li>
+      <li><%= link_to 'グルメ', feed_path(category: "gourmet") %></li>
+      <li><%= link_to '女子', feed_path(category: "love") %></li>
+      <li><%= link_to 'トレンド', feed_path(category: "trend") %></li>
+    </ul>
 
     <% @feeds.each do |feed| %>
         <tr>
-          <td>
-            <% if feed.category == "52" %>
-              <%= "映画" %>
-            <% else %>
-              <%= feed.category %>
-            <% end %>
-           </td>
           <td>
             <a href=<%= "/feeds/#{feed.id}" %>>
               <%= feed.title %>
@@ -47,10 +52,4 @@
 </table>
 
 <br>
-<script type="text/javascript">
-  console.log("<%= params[:category] %>")
-  window.onload = function(){
-    add_selected = document.getElementById("<%= params[:category] %>");
-    add_selected.selected = true;
-  }
-</script>
+

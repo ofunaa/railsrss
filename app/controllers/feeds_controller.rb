@@ -6,7 +6,11 @@ class FeedsController < ApplicationController
 
   def getrss
     if params[:category] != nil
-      @feeds = Feed.where(category: params[:category]).order("entrydate DESC")
+      if params[:category] == "all"
+        @feeds = Feed.all.order("entrydate DESC")
+      else
+        @feeds = Feed.where(category: params[:category]).order("entrydate DESC")
+      end
     elsif
       @feeds = Feed.all.order("entrydate DESC")
     end
@@ -62,12 +66,14 @@ class FeedsController < ApplicationController
                 end
             end
         end
-    @feeds = Feed.all
+    @feeds = Feed.all.order("entrydate DESC")
   end
 
   # GET /feeds/1
   # GET /feeds/1.json
   def show
+    ######## スクレピング ########
+
     require 'nokogiri'
     require 'open-uri'
     require 'cgi'
@@ -80,11 +86,92 @@ class FeedsController < ApplicationController
     html = html.sub(/^<!DOCTYPE html(.*)$/, '<!DOCTYPE html>')
     # Parse
     doc = Nokogiri::HTML(html)
-    puts doc.css('#article-body')
     @doc = doc.css('.articleBody').text.split(" ")
 
 
+    ######## 形態素解析 ########
+
+    # 必要なライブラリを呼び出し。
+    require 'natto'
+    # nm(納豆めかぶ)を呼び出し。
+    nm = Natto::MeCab.new
+
+    common_words = []
+    # nmにテキストをフィードしてparse(解析)してもらう
+    nm.parse("#{@feed.desc}") do |n|
+      s = n.surface ? n.surface : "-"
+      common_words << s
+    end
+    #２文字以上の単語のみ取得
+    common_twowords = []
+    common_words.each do |common|
+      if common.length > 1
+        common_twowords.push("#{common}")
+      end
+    end
+
+    title_words = []
+    # nmにテキストをフィードしてparse(解析)してもらう
+    nm.parse("#{@feed.title}") do |n|
+      s = n.surface ? n.surface : "-"
+      title_words << s
+    end
+    #２文字以上の単語のみ取得
+    title_twowords = []
+    title_words.each do |common_title|
+      if common_title.length > 1
+        puts common_title
+        title_twowords.push("#{common_title}")
+      end
+    end
+
+    #ディスクリプションをすべて取得
+    feedall = Feed.all
+    #feed.idとマッチ回数を入れる連想配列を作成
+    relation_feed = {}
+    #取得したフィードのディスクリプションをループ
+    feedall.each do |feedone|
+
+      
+      # 同じカテゴリに優遇
+      if @feed.category == feedone.category
+        match_count = 5
+      else
+        match_count = 0
+      end
+
+      #文章の検証
+      common_twowords.each do |common_twoword|
+        # 文章とマッチ
+        match_count = match_count + feedone.desc[0,90].scan(/#{common_twoword}/).size*2
+      end
+
+      #タイトルの検証
+      title_twowords.each do |title_twoword|
+        # タイトルとマッチ
+        match_count = match_count + feedone.title.scan(/#{title_twoword}/).size*5
+      end
+
+      relation_feed.store("#{feedone.id}","#{match_count}")
+    end
+    # 並べ替え
+    relation_feed_top = relation_feed.sort {|(k1, v1), (k2, v2)| v2 <=> v1 }
+
+    i = 0
+    @relation_feeds = []
+    loop{
+      relation_feed = Feed.where(id: "#{relation_feed_top[i][0]}")
+      @relation_feeds.push(relation_feed)
+      i += 1
+      if i > 2 then
+        break
+      end
+    }
+
+
   end
+
+
 
   # GET /feeds/new
   def new

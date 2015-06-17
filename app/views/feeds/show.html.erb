@@ -1,14 +1,24 @@
 <p id="notice"><%= notice %></p>
-<h2><%= @feed.title %></h2>
-<%= link_to 'Back', feed_path %>
+<h2>【<%= @feed.category %>】<%= @feed.title %></h2>
+<%= link_to 'Back', feed_path(category: @feed.category) %>
 <ul>
 	<li><%= @feed.entrydate %></li>
-	<li><%= @feed.link %></li>
+	<li><a href="<%= @feed.link %>"><%= @feed.link %></a></li>
 </ul>
 
 <%= @doc.each do |doc| %>
 <%= doc %><br>
 <% end %>
 
+
+<h2>関連記事</h2>
+<% @relation_feeds.each do |relation_feed| %>
+	<a href="/feeds/<%= relation_feed[0].id %>">
+	【<%= relation_feed[0].category %>】<%= relation_feed[0].title %><br>
+	<%= relation_feed[0].entrydate %><br>
+	<%= relation_feed[0].link %><br>
+	<%= relation_feed[0].desc %><br><br>
+	</a>
+<% end %>
 
 
