@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
-  get 'feed' => 'feeds#getrss'
-  resources :feeds
+	root :to => "feeds#index"
+  	get 'feed' => 'feeds#getrss'
+  	resources :feeds
 end

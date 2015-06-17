@@ -13,3 +13,143 @@
  *= require_tree .
  *= require_self
  */
+html{
+	width:100%;
+	margin:0 auto;
+	float:left;
+	padding-bottom:50px;
+}
+body {
+	width:100%;
+	margin:0 auto;
+	float:left;
+}
+a{
+	text-decoration: none;
+}
+a:hover{
+	color:#50C900;
+}
+.wrap{
+	width:90%;
+	margin:0 auto;
+}
+.header{
+	width:100%;
+	height:80px;
+	line-height:80px;
+	text-align:left;
+	background-color:#50C900;
+	color:#fff;
+	position:relative;
+}
+.header h1{
+	color:#fff;
+}
+.nav{
+	top:80px;
+	width:100%;
+	height:auto;
+	text-align:left;
+	background-color:#fff;
+}
+.nav ul{
+	width:100%;
+	float:left;
+	border-bottom:1px solid #50C900;
+}
+.nav li{
+	width:100px;
+	height:60px;
+	line-height:50px;
+	float:left;
+	text-align:center;
+	list-style-type:none;
+}
+.nav li a{
+	font-size:1.3em;
+	font-weight:bold;
+	color:#50C900;
+}
+
+
+/*  ////////    index    ////////   */
+
+.main{
+	position:relative;
+	float:left;
+}
+.feed{
+	width:30%;
+	min-width:250px;
+	height:260px;
+	margin:1.5%;
+	float:left;
+}
+.feed h2{
+	line-height:1.3em;
+}
+.feed .date{
+	
+}
+.feed .desc{
+	max-height:90px;
+	overflow:hidden;
+}
+.feed .link{
+	width:100%;
+	height:40px;
+	line-height:40px;
+	text-align:center;
+	background-color:#50C900;
+	color:#fff;
+}
+
+/*  ////////    show    ////////   */
+
+.feed_title{
+	width:100%;
+	float:left;
+	margin-top:30px;	
+}
+.entrydate{
+	font-size:1.3em;
+}
+.feed_content{
+	font-size:1.1em;
+	line-height:1.8em;
+	margin-top:40px;
+}
+.feed_link{
+	color:#50C900;
+	font-size:1.1em;
+}
+.relational_title{
+	width:100%;
+	margin-top:30px;
+	border-bottom:1px solid #50C900;
+	padding-bottom:10px;
+}
+.relational_feed{
+	width:30%;
+	min-width:250px;
+	height:260px;
+	margin:1.5%;
+	float:left;
+}
+
+/*  ////////    js    ////////   */
+
+.fixed {
+    position: fixed;
+    top: 0;
+    z-index: 1;
+}
+.fixed_main {
+    margin-top: 88px;
+}
+
+
+
+
+
